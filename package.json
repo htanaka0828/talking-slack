@@ -1,0 +1,49 @@
+{
+  "name": "talking-slack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && npm run server",
+    "start:dev": "npm run build && npm run server:dev",
+    "build": "npx webpack",
+    "server": "npx forever --minUptime 10000 --spinSleepTime 10000  ./index.js",
+    "server:dev": "nodaemon start ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htanaka0828/talking-slack.git"
+  },
+  "author": "htanaka0828",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/htanaka0828/talking-slack/issues"
+  },
+  "homepage": "https://github.com/htanaka0828/talking-slack#README.md",
+  "devDependencies": {
+    "nodaemon": "0.0.5",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "body-parser": "^1.19.0",
+    "css-loader": "^3.6.0",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "forever": "^3.0.0",
+    "node-sass": "^4.14.1",
+    "pug": "^3.0.0",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.11",
+    "vue-window-size": "^0.2.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
