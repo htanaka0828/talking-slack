@@ -16,6 +16,11 @@ div#target(:style="styleVariables")
           | #
           input(type="text" v-model="fontColor")
       tr
+        td 音声
+        td
+          select(v-model="targetVoice")
+            option(v-for="voice in voices" :value="voice.name") {{voice.name}}({{voice.lang}})
+      tr
         td サンプル
         td.sumple(:style="sumpleStyleValues") サンプルテキスト
 
@@ -31,12 +36,17 @@ export default {
     return {
       fontSize: 15,
       fontColor: '000',
+      targetVoice: null,
+      voices: [],
       isOpen: true
     }
   },
   computed: {
     actionIcon() {
       return this.isOpen ? '-' : '+';
+    },
+    curentVoice() {
+      return this.voices.find(voice => voice.name == this.targetVoice);
     },
     styleVariables() {
       return {
@@ -54,17 +64,31 @@ export default {
     }
   },
   methods: {
-    addText(res) {
+    addText(text) {
       const ComponentClass = Vue.extend(Comment)
       const instance = new ComponentClass({
         propsData: {
-          text: res.data,
+          text: text,
           top: this.createRandTop(),
           start: this.windowWidth
         }
       });
       instance.$mount();
       this.$el.append(instance.$el);
+    },
+    talkText(text) {
+      const uttr = new SpeechSynthesisUtterance(text);
+      uttr.voice = this.curentVoice;
+      speechSynthesis.speak(uttr);
+    },
+    updateVoiceList() {
+      this.voices.splice(0);
+      const voices = speechSynthesis.getVoices();
+      voices.forEach(voice => {
+        if(voice.lang.match('ja|en-US')) {
+          this.voices.push(voice);
+        }
+      });
     },
     createRandTop() {
       const max = this.windowHeight - this.fontSize;
@@ -73,8 +97,13 @@ export default {
     }
   },
   mounted() {
+    speechSynthesis.onvoiceschanged = () => this.updateVoiceList();
+
     const ws = new WebSocket(`${APP_DOMAIN}/message`);
-    ws.addEventListener("message", this.addText);
+    ws.addEventListener("message", res => {
+      this.addText(res.data);
+      this.talkText(res.data);
+    });
   }
 }
 </script>

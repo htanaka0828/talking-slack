@@ -33,7 +33,7 @@ npm run start
 ```javascript
 (function(s, d, t){
     t = d.createElement('script');
-    t.src = s + '/dist/script.js';
+    t.src = s + '/script.js';
     d.body.appendChild(t);
 })('YOURE_SERVER_DOMAIN', document);
 ```
