@@ -44,6 +44,8 @@ p {
   --right: 0px;
   position: absolute;
   word-break: keep-all;
+  overflow: hidden;
+  z-index: 99999;
   top: var(--top);
   right: var(--right);
 }
