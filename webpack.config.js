@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const env = {
-  APP_DOMAIN: JSON.stringify(process.env.HOST || 'ws://talking-slack.herokuapp.com')
+  APP_DOMAIN: JSON.stringify(process.env.HOST || 'wss://talking-slack.herokuapp.com')
 }
 
 module.exports = {
